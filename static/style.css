@@ -1,0 +1,135 @@
+/* ===== GLOBAL RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== BODY BACKGROUND ===== */
+body {
+    background: #f2f4f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* ===== MAIN CARD CONTAINER ===== */
+.container {
+    width: 500px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+}
+
+/* ===== HEADER BAR ===== */
+.header {
+    background: #1e73be;
+    color: white;
+    padding: 15px;
+    border-radius: 10px 10px 0 0;
+    font-size: 20px;
+    font-weight: bold;
+    margin: -30px -30px 30px -30px;
+}
+
+/* ===== INPUT FIELDS ===== */
+input[type="text"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.3s;
+}
+
+input:focus {
+    border-color: #1e73be;
+}
+
+/* ===== BUTTON STYLE ===== */
+button {
+    background: #4da3ff;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #1e73be;
+}
+
+/* ===== DASHBOARD LINKS ===== */
+.dashboard-links a {
+    display: block;
+    margin: 15px 0;
+    padding: 10px;
+    background: #4da3ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.dashboard-links a:hover {
+    background: #1e73be;
+}
+
+/* ===== UPLOAD BOX STYLE ===== */
+.upload-box {
+    border: 2px dashed #4da3ff;
+    padding: 40px 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    background: #f8fbff;
+}
+
+.upload-box p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+/* ===== TRANSCRIPT DISPLAY ===== */
+.transcript-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f2f4f7;
+    border-radius: 8px;
+    text-align: left;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 14px;
+}
+/* ===== REGISTER PAGE LINK ===== */
+.login-link {
+    text-decoration: none;
+    color: #1e73be;
+    font-size: 14px;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+/* ===== SUMMARY DISPLAY ===== */
+.summary-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #e8f4ff;
+    border-left: 4px solid #1e73be;
+    border-radius: 8px;
+    text-align: left;
+    max-height: 200px;
+    overflow-y: auto;
+    font-size: 14px;
+}

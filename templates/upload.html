@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Upload File</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="header">TranscribeFlow</div>
+
+    <h2>Upload your audio file</h2>
+    <hr>
+
+<h3>Live Recording</h3>
+
+<button id="startBtn">Start Recording</button>
+<button id="stopBtn" disabled>Stop Recording</button>
+
+<p id="recordStatus"></p>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="upload-box">
+            <p>Supported formats: MP3, WAV</p>
+            <input type="file" name="file" required>
+            <button type="submit">Upload</button>
+        </div>
+    </form>
+
+    <div class="transcript-box">
+    {% if transcript %}
+        <h4>Transcript:</h4>
+        <p>{{ transcript }}</p>
+    {% endif %}
+</div>
+
+<div class="summary-box">
+    {% if summary %}
+        <h4>Summary:</h4>
+        <p>{{ summary }}</p>
+    {% endif %}
+</div>
+{% if transcript and summary %}
+<a href="/download">
+    <button>Download Report</button>
+</a>
+{% endif %}
+    {% if transcript and summary %}
+<a href="/download-json">
+    <button>Download JSON Report</button>
+</a>
+{% endif %}
+    <br>
+    <a href="/dashboard">Back to Dashboard</a>
+</div>
+<script>
+let mediaRecorder;
+let audioChunks = [];
+
+const startBtn = document.getElementById("startBtn");
+const stopBtn = document.getElementById("stopBtn");
+const status = document.getElementById("recordStatus");
+
+startBtn.onclick = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    mediaRecorder = new MediaRecorder(stream);
+
+    mediaRecorder.start();
+    status.innerText = "Recording...";
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+
+    audioChunks = [];
+
+    mediaRecorder.ondataavailable = event => {
+        audioChunks.push(event.data);
+    };
+};
+
+stopBtn.onclick = async () => {
+    mediaRecorder.stop();
+    status.innerText = "Processing...";
+
+    stopBtn.disabled = true;
+
+    mediaRecorder.onstop = async () => {
+        const blob = new Blob(audioChunks, { type: "audio/wav" });
+        const formData = new FormData();
+        formData.append("audio", blob);
+
+        const response = await fetch("/record", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+
+        if (data.error) {
+            status.innerText = "Error: " + data.error;
+            return;
+        }
+
+        document.querySelector(".transcript-box").innerHTML =
+            "<h4>Transcript:</h4><p>" + data.transcript + "</p>";
+
+        document.querySelector(".summary-box").innerHTML =
+            "<h4>AI Summary:</h4><p>" + data.summary + "</p>";
+
+        status.innerText = "Done!";
+        startBtn.disabled = false;
+    };
+};
+</script>
+</body>
+</html>
