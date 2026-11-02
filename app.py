@@ -6,6 +6,10 @@ from transformers import pipeline
 from flask import send_file
 from io import BytesIO
 import json
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 app = Flask(__name__)
 app.secret_key = "secretkey"
 
@@ -55,11 +59,10 @@ def login():
 
         try:
             conn = pymysql.connect(
-                host="127.0.0.1",
-                user="root",
-                password="Ayvin@password",
-                database="flaskdb",
-                port=3306
+                host=os.getenv("DB_HOST"),
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASSWORD"),
+                database=os.getenv("DB_NAME")
             )
             cursor = conn.cursor()
             cursor.execute(
@@ -91,11 +94,10 @@ def register():
 
         try:
             conn = pymysql.connect(
-                host="127.0.0.1",
-                user="root",
-                password="Ayvin@password",
-                database="flaskdb",
-                port=3306
+                host=os.getenv("DB_HOST"),
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASSWORD"),
+                database=os.getenv("DB_NAME")
             )
             cursor = conn.cursor()
 
